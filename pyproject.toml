@@ -1,0 +1,10 @@
+[project]
+name = "crudadmin-app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "crudadmin[memcached,mysql]>=0.4.3",
+    "uvicorn[standard]>=0.38.0",
+]

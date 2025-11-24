@@ -1,0 +1,24 @@
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Numeric
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from models.base import Base
+
+
+class OrderItem(Base):
+    __tablename__ = "order_items"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    order_id = Column(Integer, ForeignKey("orders.id"), nullable=False, index=True)
+    product_id = Column(Integer, ForeignKey("products.id"), nullable=False, index=True)
+    quantity = Column(Integer, nullable=False, default=1)
+    price = Column(Numeric(10, 2), nullable=False)  # 下單時的價格
+    product_name = Column(String(100), nullable=False)  # 快照產品名稱
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # 關聯
+    order = relationship("Order", back_populates="items")
+    product = relationship("Product", back_populates="order_items")
+    
+    def __repr__(self):
+        return f"<OrderItem(id={self.id}, order_id={self.order_id}, product_id={self.product_id}, quantity={self.quantity})>"
+
